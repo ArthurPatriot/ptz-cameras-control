@@ -51,7 +51,7 @@ class Camera
 				return '/ISAPI/PTZCtrl';
 				break;
 			default:
-				return $provider;
+				return '/' . trim($provider, '/');
 		}
 	}
 
