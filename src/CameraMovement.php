@@ -3,7 +3,7 @@
 namespace PtzCamera;
 
 /**
- * Class CameraMovement
+ * Class CameraMovement for easy camera control
  *
  * @package PtzCamera
  */
