@@ -1,0 +1,21 @@
+{
+    "name": "arthurpatriot/ptz-cameras-control",
+    "description": "Easy control your PTZ Cameras from PHP",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0@dev"
+    },
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Artur Khylskyi",
+            "email": "arthur.patriot@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "PtzCamera\\": "src/"
+        }
+    }
+}
