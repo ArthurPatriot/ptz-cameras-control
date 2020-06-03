@@ -51,45 +51,6 @@ class Camera
 	}
 
 	/**
-	 * Set Working Channel
-	 *
-	 * @param int $channel
-	 */
-	public function setChannel(int $channel)
-	{
-		$this->channel = $channel;
-	}
-
-	/**
-	 * Camera PTZ Left
-	 *
-	 * @param int $pan
-	 * @param int $duration
-	 * @return string
-	 */
-	public function left(int $pan = -20, int $duration = 1000)
-	{
-		return $this->momentary($pan, $duration);
-	}
-
-	/**
-	 * It is used to control PTZ move around and zoom in a period of time for the device
-	 *
-	 * @param int $pan
-	 * @param int $tilt
-	 * @param int $zoom
-	 * @param int $duration
-	 * @return string
-	 */
-	public function momentary($pan = 0, $tilt = 0, $zoom = 0, $duration = 1000)
-	{
-		$url = $this->base_url . "/channels/{$this->channel}/momentary";
-		$data = RequestDataBuilder::ptzDataMomentary($pan, $tilt, $zoom, $duration);
-
-		return $this->makeRequest($url, $data);
-	}
-
-	/**
 	 * Send Request to Camera
 	 *
 	 * @param string $url
@@ -120,6 +81,62 @@ class Camera
 
 		return $response->getStatusCode();
 
+	}
+
+	/**
+	 * Set Working Channel
+	 *
+	 * @param int $channel
+	 */
+	public function setChannel(int $channel)
+	{
+		$this->channel = $channel;
+	}
+
+	/**
+	 * It is used to control PTZ move around and zoom in a period of time for the device
+	 *
+	 * @param int $pan
+	 * @param int $tilt
+	 * @param int $zoom
+	 * @param int $duration
+	 * @return string
+	 */
+	public function momentary(int $pan = 0, int $tilt = 0, int $zoom = 0, int $duration = 1000)
+	{
+		$url = $this->base_url . "/channels/{$this->channel}/momentary";
+		$data = RequestDataBuilder::ptzDataMomentary($pan, $tilt, $zoom, $duration);
+
+		return $this->makeRequest($url, $data);
+	}
+
+	/**
+	 * It is used to move the position which is defined by positionX, positionY
+	 * to the screen center and relative zoom for the device
+	 *
+	 * @param int $posX
+	 * @param int $posY
+	 * @param int $zoom
+	 * @return string
+	 */
+	public function relative(int $posX = 0, int $posY = 0, int $zoom = 0)
+	{
+		$url = $this->base_url . "/channels/{$this->channel}/relative";
+		$data = RequestDataBuilder::ptzDataRelative($posX, $posY, $zoom);
+
+		return $this->makeRequest($url, $data);
+	}
+
+	/**
+	 * Camera PTZ Left
+	 *
+	 * @param int $pan
+	 * @param int $duration
+	 * @return string
+	 */
+	public function left(int $pan = -20, int $duration = 1000)
+	{
+		return $this->momentary($pan, $duration);
 	}
 
 	/**

@@ -28,4 +28,17 @@ class RequestDataBuilder
 		<?php return ob_get_clean();
 	}
 
+	public static function ptzDataRelative(int $posX, int $posY, int $zoom)
+	{
+		ob_start(); ?>
+        <PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
+            <Relative>
+                <positionX><?= $posX ?></positionX>
+                <positionY><?= $posY ?></positionY>
+                <relativeZoom><?= $zoom ?></relativeZoom>
+            </Relative>
+        </PTZData>
+		<?php return ob_get_clean();
+	}
+
 }
