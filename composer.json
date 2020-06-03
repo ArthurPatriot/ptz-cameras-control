@@ -3,6 +3,7 @@
     "description": "Easy control your PTZ Cameras from PHP",
     "type": "library",
     "require": {
+        "php": "^7.0",
         "guzzlehttp/guzzle": "^6.0"
     },
     "license": "GPL-3.0-or-later",

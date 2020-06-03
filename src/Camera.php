@@ -5,6 +5,11 @@ namespace PtzCamera;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * Class Camera
+ *
+ * @package PtzCamera
+ */
 class Camera
 {
 
@@ -51,45 +56,6 @@ class Camera
 	}
 
 	/**
-	 * Set Working Channel
-	 *
-	 * @param int $channel
-	 */
-	public function setChannel(int $channel)
-	{
-		$this->channel = $channel;
-	}
-
-	/**
-	 * Camera PTZ Left
-	 *
-	 * @param int $pan
-	 * @param int $duration
-	 * @return string
-	 */
-	public function left(int $pan = -20, int $duration = 1000)
-	{
-		return $this->momentary($pan, $duration);
-	}
-
-	/**
-	 * It is used to control PTZ move around and zoom in a period of time for the device
-	 *
-	 * @param int $pan
-	 * @param int $tilt
-	 * @param int $zoom
-	 * @param int $duration
-	 * @return string
-	 */
-	public function momentary($pan = 0, $tilt = 0, $zoom = 0, $duration = 1000)
-	{
-		$url = $this->base_url . "/channels/{$this->channel}/momentary";
-		$data = RequestDataBuilder::ptzDataMomentary($pan, $tilt, $zoom, $duration);
-
-		return $this->makeRequest($url, $data);
-	}
-
-	/**
 	 * Send Request to Camera
 	 *
 	 * @param string $url
@@ -123,99 +89,47 @@ class Camera
 	}
 
 	/**
-	 * Camera PTZ Right
+	 * Set Working Channel
+	 *
+	 * @param int $channel
+	 */
+	public function setChannel(int $channel)
+	{
+		$this->channel = $channel;
+	}
+
+	/**
+	 * It is used to control PTZ move around and zoom in a period of time for the device
 	 *
 	 * @param int $pan
-	 * @param int $duration
-	 * @return string
-	 */
-	public function right(int $pan = 20, int $duration = 1000)
-	{
-		return $this->momentary($pan, null, null, $duration);
-	}
-
-	/**
-	 * Camera PTZ Up
-	 *
 	 * @param int $tilt
-	 * @param int $duration
-	 * @return string
-	 */
-	public function up(int $tilt = 20, int $duration = 1000)
-	{
-		return $this->momentary(null, $tilt, null, $duration);
-	}
-
-	/**
-	 * Camera PTZ Down
-	 *
-	 * @param int $tilt
-	 * @param int $duration
-	 * @return string
-	 */
-	public function down(int $tilt = -20, int $duration = 1000)
-	{
-		return $this->momentary(null, $tilt, null, $duration);
-	}
-
-	/**
-	 * Camera PTZ Zoom In
-	 *
 	 * @param int $zoom
 	 * @param int $duration
 	 * @return string
 	 */
-	public function zoomIn(int $zoom = 1, int $duration = 1000)
+	public function momentary(int $pan = 0, int $tilt = 0, int $zoom = 0, int $duration = 1000)
 	{
-		return $this->momentary(null, null, $zoom, $duration);
+		$url = $this->base_url . "/channels/{$this->channel}/momentary";
+		$data = RequestDataBuilder::ptzDataMomentary($pan, $tilt, $zoom, $duration);
+
+		return $this->makeRequest($url, $data);
 	}
 
 	/**
-	 * Camera PTZ Zoom Out
+	 * It is used to move the position which is defined by positionX, positionY
+	 * to the screen center and relative zoom for the device
 	 *
+	 * @param int $posX
+	 * @param int $posY
 	 * @param int $zoom
-	 * @param int $duration
 	 * @return string
 	 */
-	public function zoomOut(int $zoom = -1, int $duration = 1000)
+	public function relative(int $posX = 0, int $posY = 0, int $zoom = 0)
 	{
-		return $this->momentary(null, null, $zoom, $duration);
-	}
+		$url = $this->base_url . "/channels/{$this->channel}/relative";
+		$data = RequestDataBuilder::ptzDataRelative($posX, $posY, $zoom);
 
-	/**
-	 * Camera PTZ Left / Right Moves
-	 *
-	 * @param int $pan
-	 * @param int $duration
-	 * @return string
-	 */
-	public function pan(int $pan, int $duration = 1000)
-	{
-		return $this->momentary($pan, null, null, $duration);
-	}
-
-	/**
-	 * Camera PTZ Up / Down Moves
-	 *
-	 * @param int $tilt
-	 * @param int $duration
-	 * @return string
-	 */
-	public function tilt(int $tilt, int $duration = 1000)
-	{
-		return $this->momentary(null, $tilt, null, $duration);
-	}
-
-	/**
-	 * Camera PTZ Zoom
-	 *
-	 * @param int $zoom
-	 * @param int $duration
-	 * @return string
-	 */
-	public function zoom(int $zoom, int $duration = 1000)
-	{
-		return $this->momentary(null, null, $zoom, $duration);
+		return $this->makeRequest($url, $data);
 	}
 
 	/**
